@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (DandiSamarpanAashram, KutchSamarpanAashram, SaurastraSamarpanAashram,
+from .models import (DandiSamarpanAashram, KutchSamarpanAashram, SaurashtraSamarpanAashram,
                      GujaratSamarpanAashram, GoaSamarpanAashram, MadhyaBharatSamarpanAashram,
                      RajasthanSamarpanAashram, DakshinBharatShreeShivkrupanandSwamiMath)
 
@@ -26,7 +26,7 @@ class KutchSettings(admin.ModelAdmin):
                        'payment_1_datetime', 'payment_2_datetime', 'payment_3_datetime', 'created_at']
 
 
-class SaurastraSettings(admin.ModelAdmin):
+class SaurashtraSettings(admin.ModelAdmin):
     list_display = ['description', 'manager', 'vyavasthapak', 'trustee', 'finance_house_head', 'Ambareeshbhai',
                     'Cashier', 'quotation_file_1', 'quotation_file_2', 'quotation_file_3', 'bill_file',
                     'payment_1', 'payment_1_datetime',
@@ -94,7 +94,7 @@ class DakshinBharatSettings(admin.ModelAdmin):
 
 admin.site.register(DandiSamarpanAashram, DandiSettings)
 admin.site.register(KutchSamarpanAashram, KutchSettings)
-admin.site.register(SaurastraSamarpanAashram, SaurastraSettings)
+admin.site.register(SaurashtraSamarpanAashram, SaurashtraSettings)
 admin.site.register(GujaratSamarpanAashram, GujaratSettings)
 admin.site.register(GoaSamarpanAashram, GoaSettings)
 admin.site.register(MadhyaBharatSamarpanAashram, MadhyaBharatSettings)
