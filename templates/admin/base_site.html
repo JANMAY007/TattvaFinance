@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+  <meta name="theme-color" content="#000000">
+{% endblock %}
+
+{% block footer %}
+  {{ block.super }}
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('{% static 'serviceworker.js' %}')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    }
+  </script>
+{% endblock %}
