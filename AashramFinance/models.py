@@ -1,6 +1,5 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -8,6 +7,26 @@ from django.utils import timezone
 class BaseAashram(models.Model):
     procurement_name = models.CharField(max_length=100, unique=True)
     comments = models.TextField()
+    tds_choices = (
+        ('94C Any contract payments',
+         (
+             ('Individual/HUF - 1%', 'Individual/HUF - 1%'),
+             ('Others - 2%', 'Others - 2%'),
+         )),
+        ('94J - Professional fees',
+         (
+             ('Professional fees - 10%', 'Professional fees - 10%'),
+         )),
+        ('94Q - TDS on all purchases',
+         (
+             (' 0.10% on bill amount', ' 0.10% on bill amount'),
+         ))
+    )
+    tds = models.CharField(max_length=100, choices=tds_choices, default='94C Any contract payments',
+                           help_text='94C -> Applicable when Single bill more than 30k & yearly payment more than 1 '
+                                     'lakh<br>'
+                                     '94J -> Applicable when Single bill more than 30k<br>'
+                                     '94Q -> Applicable when purchases from single party exceeds Rs.50 lakh.')
     manager = models.BooleanField(default=False)
     manager_updated_at = models.DateTimeField(auto_now=True)
     vyavasthapak = models.BooleanField(default=False)
