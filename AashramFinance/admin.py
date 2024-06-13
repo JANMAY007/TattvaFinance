@@ -87,12 +87,13 @@ class OrdersInline(admin.TabularInline):
 
 
 class VendorsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'details', 'contact', 'email', 'city', 'state', 'country')
+    list_display = ('name', 'details', 'contact', 'email', 'city',
+                    'state', 'country', 'get_boolean_fields')
     inlines = [OrdersInline]
 
     def get_boolean_fields(self, obj):
         fields = [
-            ('Dandi Samarpan Aashram', obj.daandi_samarpan_aashram),
+            ('Dandi Samarpan Aashram', obj.dandi_samarpan_aashram),
             ('Kutch Samarpan Aashram', obj.kutch_samarpan_aashram),
             ('Saurashtra Samarpan Aashram', obj.saurashtra_samarpan_aashram),
             ('Gujarat Samarpan Aashram', obj.gujarat_samarpan_aashram),
@@ -101,7 +102,7 @@ class VendorsAdmin(admin.ModelAdmin):
             ('Rajasthan Samarpan Aashram', obj.rajasthan_samarpan_aashram),
             ('Dakshin Bharat Shree Shivkrupanand Swami Math', obj.dakshin_bharat_shree_shivkrupanand_swami_math),
         ]
-        formatted_fields = [f"{label}: {'✔' if value else '✘'}" for label, value in fields]
+        formatted_fields = [f"{label}✔" for label, value in fields if value]
         return format_html('<br>'.join(formatted_fields))
     get_boolean_fields.short_description = 'Roles'
 
