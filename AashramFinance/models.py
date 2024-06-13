@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -115,3 +116,42 @@ class DakshinBharatShreeShivkrupanandSwamiMath(BaseAashram):
     class Meta:
         verbose_name = 'Dakshin Bharat Shree Shivkrupanand Swami Math'
         verbose_name_plural = 'Dakshin Bharat Shree Shivkrupanand Swami Math'
+
+
+class Vendors(models.Model):
+    class Meta:
+        verbose_name = 'Vendor'
+        verbose_name_plural = 'Vendors'
+
+    dandi_samarpan_aashram = models.BooleanField(default=False)
+    kutch_samarpan_aashram = models.BooleanField(default=False)
+    saurashtra_samarpan_aashram = models.BooleanField(default=False)
+    gujarat_samarpan_aashram = models.BooleanField(default=False)
+    goa_samarpan_aashram = models.BooleanField(default=False)
+    madhya_bharat_samarpan_aashram = models.BooleanField(default=False)
+    rajasthan_samarpan_aashram = models.BooleanField(default=False)
+    dakshin_bharat_shree_shivkrupanand_swami_math = models.BooleanField(default=False)
+    name = models.CharField(max_length=100, unique=True)
+    details = models.TextField()
+    contact = models.CharField(max_length=15, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    state = models.CharField(max_length=50, blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
+    zip_code = models.CharField(max_length=6, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Orders(models.Model):
+    class Meta:
+        verbose_name = 'Order'
+        verbose_name_plural = 'Orders'
+    vendor = models.ForeignKey(Vendors, on_delete=models.CASCADE)
+    order_id = models.CharField(max_length=100)
+    order_date = models.DateField()
+    order_amount = models.FloatField()
+    order_status = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

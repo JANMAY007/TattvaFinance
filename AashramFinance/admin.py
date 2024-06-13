@@ -6,7 +6,7 @@ from .models import (
     DandiSamarpanAashram, KutchSamarpanAashram, SaurashtraSamarpanAashram,
     GujaratSamarpanAashram, GoaSamarpanAashram, MadhyaBharatSamarpanAashram,
     RajasthanSamarpanAashram, DakshinBharatShreeShivkrupanandSwamiMath,
-    Quotation, Payment
+    Quotation, Payment, Vendors, Orders
 )
 
 
@@ -55,6 +55,7 @@ class BaseAashramAdmin(admin.ModelAdmin):
             links = [format_html('{1}. Amount Paid {0}', p.amount, i + 1) for i, p in enumerate(payments)]
             return format_html('<br>'.join(links))
         return "No Payments"
+    get_payments.short_description = 'Payments'
 
     def get_boolean_fields(self, obj):
         fields = [
@@ -78,3 +79,31 @@ admin.site.register(GoaSamarpanAashram, BaseAashramAdmin)
 admin.site.register(MadhyaBharatSamarpanAashram, BaseAashramAdmin)
 admin.site.register(RajasthanSamarpanAashram, BaseAashramAdmin)
 admin.site.register(DakshinBharatShreeShivkrupanandSwamiMath, BaseAashramAdmin)
+
+
+class OrdersInline(admin.TabularInline):
+    model = Orders
+    extra = 1
+
+
+class VendorsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'details', 'contact', 'email', 'city', 'state', 'country')
+    inlines = [OrdersInline]
+
+    def get_boolean_fields(self, obj):
+        fields = [
+            ('Dandi Samarpan Aashram', obj.daandi_samarpan_aashram),
+            ('Kutch Samarpan Aashram', obj.kutch_samarpan_aashram),
+            ('Saurashtra Samarpan Aashram', obj.saurashtra_samarpan_aashram),
+            ('Gujarat Samarpan Aashram', obj.gujarat_samarpan_aashram),
+            ('Goa Samarpan Aashram', obj.goa_samarpan_aashram),
+            ('Madhya Bharat Samarpan Aashram', obj.madhya_bharat_samarpan_aashram),
+            ('Rajasthan Samarpan Aashram', obj.rajasthan_samarpan_aashram),
+            ('Dakshin Bharat Shree Shivkrupanand Swami Math', obj.dakshin_bharat_shree_shivkrupanand_swami_math),
+        ]
+        formatted_fields = [f"{label}: {'✔' if value else '✘'}" for label, value in fields]
+        return format_html('<br>'.join(formatted_fields))
+    get_boolean_fields.short_description = 'Roles'
+
+
+admin.site.register(Vendors, VendorsAdmin)
