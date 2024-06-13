@@ -130,7 +130,6 @@ JAZZMIN_SETTINGS = {
     "site_icon": None,
     "welcome_sign": "Welcome to the Tattva Finance",
     "copyright": "Janmay Bhatt, 2024",
-    "search_model": ["auth.User", "auth.Group"],
     "topmenu_links": [
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
     ],
