@@ -20,9 +20,10 @@ class BaseAashram(models.Model):
         ('94Q - TDS on all purchases',
          (
              (' 0.10% on bill amount', ' 0.10% on bill amount'),
-         ))
+         )),
+        ('None', 'None'),
     )
-    tds = models.CharField(max_length=100, choices=tds_choices, default='94C Any contract payments',
+    tds = models.CharField(max_length=100, choices=tds_choices, default='None',
                            help_text='94C -> Applicable when Single bill more than 30k & yearly payment more than 1 '
                                      'lakh<br>'
                                      '94J -> Applicable when Single bill more than 30k<br>'
