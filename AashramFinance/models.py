@@ -29,17 +29,17 @@ class BaseAashram(models.Model):
                                      '94J -> Applicable when Single bill more than 30k<br>'
                                      '94Q -> Applicable when purchases from single party exceeds Rs.50 lakh.')
     manager = models.BooleanField(default=False)
-    manager_updated_at = models.DateTimeField(auto_now=True)
+    manager_updated_at = models.DateTimeField()
     vyavasthapak = models.BooleanField(default=False)
-    vyavasthapak_updated_at = models.DateTimeField(auto_now=True)
+    vyavasthapak_updated_at = models.DateTimeField()
     trustee = models.BooleanField(default=False)
-    trustee_updated_at = models.DateTimeField(auto_now=True)
+    trustee_updated_at = models.DateTimeField()
     finance_house_head = models.BooleanField(default=False)
-    finance_house_head_updated_at = models.DateTimeField(auto_now=True)
+    finance_house_head_updated_at = models.DateTimeField()
     Ambareeshbhai = models.BooleanField(default=False)
-    Ambareeshbhai_updated_at = models.DateTimeField(auto_now=True)
+    Ambareeshbhai_updated_at = models.DateTimeField()
     accountant = models.BooleanField(default=False)
-    accountant_updated_at = models.DateTimeField(auto_now=True)
+    accountant_updated_at = models.DateTimeField()
     bill_file = models.FileField(upload_to='bill_files/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     object = models.manager
@@ -48,21 +48,37 @@ class BaseAashram(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
+        # Get the previous instance from the database
         if self.pk is not None:
-            old_instance = self.__class__.objects.get(pk=self.pk)
-            if self.manager != old_instance.manager:
+            previous = type(self).objects.get(pk=self.pk)
+        else:
+            previous = None
+        update_fields = []
+        # Compare each boolean field and update the timestamp if changed
+        if previous:
+            if self.manager != previous.manager:
                 self.manager_updated_at = timezone.now()
-            if self.vyavasthapak != old_instance.vyavasthapak:
+                update_fields.append('manager_updated_at')
+            if self.vyavasthapak != previous.vyavasthapak:
                 self.vyavasthapak_updated_at = timezone.now()
-            if self.trustee != old_instance.trustee:
+                update_fields.append('vyavasthapak_updated_at')
+            if self.trustee != previous.trustee:
                 self.trustee_updated_at = timezone.now()
-            if self.finance_house_head != old_instance.finance_house_head:
+                update_fields.append('trustee_updated_at')
+            if self.finance_house_head != previous.finance_house_head:
                 self.finance_house_head_updated_at = timezone.now()
-            if self.Ambareeshbhai != old_instance.Ambareeshbhai:
+                update_fields.append('finance_house_head_updated_at')
+            if self.Ambareeshbhai != previous.Ambareeshbhai:
                 self.Ambareeshbhai_updated_at = timezone.now()
-            if self.accountant != old_instance.accountant:
+                update_fields.append('Ambareeshbhai_updated_at')
+            if self.accountant != previous.accountant:
                 self.accountant_updated_at = timezone.now()
+                update_fields.append('accountant_updated_at')
+        # Save the model instance
         super().save(*args, **kwargs)
+        # Save only the updated timestamp fields
+        if update_fields:
+            super().save(update_fields=update_fields)
 
 
 class Quotation(models.Model):
@@ -114,7 +130,7 @@ class GujaratSamarpanAashram(BaseAashram):
         verbose_name_plural = 'Gujarat Samarpan Aashram'
 
 
-class GoaSamarpanAashram(BaseAashram):
+class SamarpanAashramGoa(BaseAashram):
     class Meta:
         verbose_name = 'Goa Samarpan Aashram'
         verbose_name_plural = 'Goa Samarpan Aashram'

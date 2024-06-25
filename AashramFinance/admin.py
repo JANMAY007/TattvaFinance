@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.html import format_html
 from .models import (
     DandiSamarpanAashram, KutchSamarpanAashram, SaurashtraSamarpanAashram,
-    GujaratSamarpanAashram, GoaSamarpanAashram, MadhyaBharatSamarpanAashram,
+    GujaratSamarpanAashram, SamarpanAashramGoa, MadhyaBharatSamarpanAashram,
     RajasthanSamarpanAashram, DakshinBharatShreeShivkrupanandSwamiMath,
     Quotation, Payment, Vendors, Orders
 )
@@ -75,7 +75,7 @@ admin.site.register(DandiSamarpanAashram, BaseAashramAdmin)
 admin.site.register(KutchSamarpanAashram, BaseAashramAdmin)
 admin.site.register(SaurashtraSamarpanAashram, BaseAashramAdmin)
 admin.site.register(GujaratSamarpanAashram, BaseAashramAdmin)
-admin.site.register(GoaSamarpanAashram, BaseAashramAdmin)
+admin.site.register(SamarpanAashramGoa, BaseAashramAdmin)
 admin.site.register(MadhyaBharatSamarpanAashram, BaseAashramAdmin)
 admin.site.register(RajasthanSamarpanAashram, BaseAashramAdmin)
 admin.site.register(DakshinBharatShreeShivkrupanandSwamiMath, BaseAashramAdmin)
