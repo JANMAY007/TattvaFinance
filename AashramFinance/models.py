@@ -132,8 +132,8 @@ class GujaratSamarpanAashram(BaseAashram):
 
 class SamarpanAashramGoa(BaseAashram):
     class Meta:
-        verbose_name = 'Goa Samarpan Aashram'
-        verbose_name_plural = 'Goa Samarpan Aashram'
+        verbose_name = 'Samarpan Aashram Goa'
+        verbose_name_plural = 'Samarpan Aashram Goa'
 
 
 class MadhyaBharatSamarpanAashram(BaseAashram):
