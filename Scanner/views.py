@@ -1,3 +1,5 @@
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .serializers import ScannerSerializer, LoginSerializer
 from django.contrib.auth import authenticate
@@ -20,6 +22,9 @@ class LoginView(APIView):
 
 
 class Scanner(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
         serializer = ScannerSerializer(data=request.data)
         if serializer.is_valid():
